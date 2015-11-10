@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9db24eeb-b4b2-4232-a022-9c557cc76eec" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/edu/iut/app/ApplicationSession.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="iuttp.iws" />
@@ -31,16 +31,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ApplicationLogs.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/edu/iut/app/ApplicationLogs.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -89,8 +79,8 @@
       <file leaf-file-name="ApplicationSession.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/iut/app/ApplicationSession.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17777778">
-              <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.82222223">
+              <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,6 +138,7 @@
         <option value="$PROJECT_DIR$/src/edu/iut/app/ApplicationErrorLog.java" />
         <option value="$PROJECT_DIR$/src/edu/iut/app/ApplicationInfoLog.java" />
         <option value="$PROJECT_DIR$/src/edu/iut/app/ApplicationSession.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -178,7 +169,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -402,7 +393,16 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -411,7 +411,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="SearchEverywhereHistoryKey" value="commit&#9;ACTION&#9;ChangesView.Commit&#10;git&#9;ACTION&#9;Git.Menu" />
+    <property name="SearchEverywhereHistoryKey" value="gitigno&#9;FILE&#9;file:///Users/aurelien/Google Drive/DUT Informatique/Java/tp1/iutjava/workspace/iuttp/.gitignore&#10;commit&#9;ACTION&#9;ChangesView.Commit&#10;git&#9;ACTION&#9;Git.Menu" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../.." />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -869,7 +869,7 @@
       <workItem from="1446543801807" duration="1865000" />
       <workItem from="1447069992443" duration="2328000" />
       <workItem from="1447082594285" duration="375000" />
-      <workItem from="1447144768682" duration="1945000" />
+      <workItem from="1447144768682" duration="2768000" />
     </task>
     <task id="LOCAL-00001" summary="TP1 terminé">
       <created>1447076847230</created>
@@ -883,15 +883,21 @@
       <option name="project" value="LOCAL" />
       <updated>1447145600108</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ajout de ApplicationSession">
+      <created>1447147340725</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1447147340725</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6513000" />
+    <option name="totallyTimeSpent" value="7336000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -933,7 +939,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="TP1 terminé" />
     <MESSAGE value="Ajout du code fourni dans le TP2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout du code fourni dans le TP2" />
+    <MESSAGE value="Ajout de ApplicationSession" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout de ApplicationSession" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1282,8 +1289,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/iut/app/ApplicationSession.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17777778">
-          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.82222223">
+          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
