@@ -6,7 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ApplicationSession {
-	
 	// Exercice 1 : Gérer l'internationation
 	protected ResourceBundle resourceBundle;
 	protected Locale locale;
