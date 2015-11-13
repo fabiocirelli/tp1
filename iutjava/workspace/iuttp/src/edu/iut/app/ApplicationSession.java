@@ -19,7 +19,7 @@ public class ApplicationSession {
 	private static ApplicationSession session = null;
 	private ApplicationSession() {
 		/* Definir US comme locale par défaut */
-		Locale.setDefault(Locale.US);
+		//Locale.setDefault(Locale.US);
 		
 		locale = Locale.getDefault();
 		resourceBundle = ResourceBundle.getBundle("edu.iut.resources.strings.res");
@@ -28,7 +28,7 @@ public class ApplicationSession {
 		sessionExceptionLogger = Logger.getLogger("sessionException");
 		sessionExceptionLogger.setLevel(Level.ALL);
 	}
-	
+
 	
 	static public ApplicationSession instance() {
 		if (session == null) {			
