@@ -1,18 +1,16 @@
 package edu.iut.gui.frames;
 
-import java.awt.CardLayout;
+import edu.iut.app.ApplicationSession;
+import edu.iut.gui.widget.agenda.AgendaPanelFactory;
+import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
+import edu.iut.gui.widget.agenda.ControlAgendaViewPanel;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.*;
-
-import edu.iut.app.ApplicationSession;
-import edu.iut.gui.widget.agenda.AgendaPanelFactory;
-import edu.iut.gui.widget.agenda.ControlAgendaViewPanel;
-import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
 
 
 public class SchedulerFrame extends JFrame {
@@ -41,7 +39,7 @@ public class SchedulerFrame extends JFrame {
 		contentPane.add(weekView,ActiveView.WEEK_VIEW.name());
 		contentPane.add(monthView,ActiveView.MONTH_VIEW.name());
 	
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,agendaViewPanel, contentPane);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,agendaViewPanel, contentPane);
 		this.setContentPane(splitPane);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -64,7 +62,6 @@ public class SchedulerFrame extends JFrame {
 		helpMenu.add(fileMenu.add(new NotImplementedMenuItem("display")));
 		helpMenu.add(fileMenu.add(new NotImplementedMenuItem("about")));
 
-		
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
 		menuBar.add(helpMenu);

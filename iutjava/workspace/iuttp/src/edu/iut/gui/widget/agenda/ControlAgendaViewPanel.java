@@ -1,20 +1,10 @@
 package edu.iut.gui.widget.agenda;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
-
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JSpinner;
-import javax.swing.JPanel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SpinnerModel;
-
 import edu.iut.app.ApplicationSession;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Calendar;
 
 public class ControlAgendaViewPanel extends JPanel {
 
@@ -29,7 +19,26 @@ public class ControlAgendaViewPanel extends JPanel {
 
 		this.agendaViewLayout = layerLayout;
 		this.contentPane = contentPane;
-		/** EX3: REMPLACEMENT DU BOUTON NEXT */
+
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int minYear = year-year%10;
+		int maxYear = minYear+10;
+
+		SpinnerNumberModel model = new SpinnerNumberModel(year, minYear, maxYear, 1);
+		JSpinner spinner = new JSpinner(model);
+
+		Integer[] days = new Integer[31];
+		for(int i = 1; i <= 31; i++){
+			days[i-1] = i;
+		}
+
+		JComboBox<String> monthsCombo = new JComboBox<>(ApplicationSession.instance().getMonths());
+		JComboBox<Integer> daysCombo = new JComboBox<>(days);
+
+
+		add(spinner);
+		add(monthsCombo);
+		add(daysCombo);
 	}
 	
 	public int getYear() {
