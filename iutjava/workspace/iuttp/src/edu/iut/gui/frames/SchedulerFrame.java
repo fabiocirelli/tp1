@@ -5,14 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeListener;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
+import javax.swing.*;
 
 import edu.iut.app.ApplicationSession;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory;
@@ -27,6 +22,9 @@ public class SchedulerFrame extends JFrame {
 	JPanel dayView;
 	JPanel weekView;
 	JPanel monthView;
+
+	private ViewChangeListener viewChangeListener = new ViewChangeListener();
+	private NotImplementedListener notImplementedListener = new NotImplementedListener();
 	
 	protected void setupUI() {
 		
@@ -49,20 +47,22 @@ public class SchedulerFrame extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu fileMenu = new JMenu(ApplicationSession.instance().getString("file"));
-		fileMenu.add(new JMenuItem(ApplicationSession.instance().getString("load")));
-		fileMenu.add(new JMenuItem(ApplicationSession.instance().getString("save")));
-		fileMenu.add(new JMenuItem(ApplicationSession.instance().getString("quit")));
+		fileMenu.add(new NotImplementedMenuItem("load"));
+		fileMenu.add(new NotImplementedMenuItem("save"));
+		fileMenu.add(new NotImplementedMenuItem("quit"));
 
 		JMenu editMenu = new JMenu(ApplicationSession.instance().getString("edit"));
+
+
 		editMenu.add(new JMenu(ApplicationSession.instance().getString("view")){{
-			add(new JMenuItem(ApplicationSession.instance().getString("month")));
-			add(new JMenuItem(ApplicationSession.instance().getString("week")));
-			add(new JMenuItem(ApplicationSession.instance().getString("day")));
+			add(new ViewChangeMenuItem(ActiveView.MONTH_VIEW));
+			add(new ViewChangeMenuItem(ActiveView.WEEK_VIEW));
+			add(new ViewChangeMenuItem(ActiveView.DAY_VIEW));
 		}});
 
 		JMenu helpMenu = new JMenu(ApplicationSession.instance().getString("help"));
-		helpMenu.add(new JMenuItem(ApplicationSession.instance().getString("display")));
-		helpMenu.add(new JMenuItem(ApplicationSession.instance().getString("about")));
+		helpMenu.add(fileMenu.add(new NotImplementedMenuItem("display")));
+		helpMenu.add(fileMenu.add(new NotImplementedMenuItem("about")));
 
 		
 		menuBar.add(fileMenu);
@@ -99,6 +99,48 @@ public class SchedulerFrame extends JFrame {
 			}
 		});
 		setupUI();
+	}
+
+	private class ViewChangeMenuItem extends JMenuItem{
+
+		private ActiveView view;
+
+		public ViewChangeMenuItem(ActiveView view){
+			super(ApplicationSession.instance().getString(view.name()));
+			addActionListener(viewChangeListener);
+			this.view = view;
+		}
+
+		public ActiveView getView() {
+			return view;
+		}
+	}
+
+	private class NotImplementedMenuItem extends JMenuItem{
+
+		public NotImplementedMenuItem(String name){
+			super(ApplicationSession.instance().getString(name));
+			addActionListener(notImplementedListener);
+
+		}
+	}
+
+	private class ViewChangeListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ViewChangeMenuItem item = (ViewChangeMenuItem) e.getSource();
+			layerLayout.show(contentPane, item.getView().name());
+
+		}
+	}
+
+	private class NotImplementedListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(contentPane, ApplicationSession.instance().getString("notImplementedError"));
+		}
 	}
 	
 }
