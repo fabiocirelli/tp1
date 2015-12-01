@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by aurelien on 13/11/2015.
- */
 public class ApplicationInfoLogTest {
 
     @Test

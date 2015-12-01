@@ -27,13 +27,8 @@ public class ControlAgendaViewPanel extends JPanel {
 		SpinnerNumberModel model = new SpinnerNumberModel(year, minYear, maxYear, 1);
 		JSpinner spinner = new JSpinner(model);
 
-		Integer[] days = new Integer[31];
-		for(int i = 1; i <= 31; i++){
-			days[i-1] = i;
-		}
-
 		JComboBox<String> monthsCombo = new JComboBox<>(ApplicationSession.instance().getMonths());
-		JComboBox<Integer> daysCombo = new JComboBox<>(days);
+		JComboBox<String> daysCombo = new JComboBox<>(ApplicationSession.instance().getDays());
 
 
 		add(spinner);

@@ -1,6 +1,7 @@
 package edu.iut.gui.frames;
 
 import edu.iut.app.ApplicationSession;
+import edu.iut.gui.listeners.ApplicationErrorMessageDialog;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
 import edu.iut.gui.widget.agenda.ControlAgendaViewPanel;
@@ -136,7 +137,7 @@ public class SchedulerFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(contentPane, ApplicationSession.instance().getString("notImplementedError"));
+			new ApplicationErrorMessageDialog().newMessage("Erreur", ApplicationSession.instance().getString("notImplementedError"));
 		}
 	}
 	
