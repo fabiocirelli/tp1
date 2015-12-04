@@ -6,7 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ApplicationSession {
-	
+
+	protected Agenda agenda;
 	protected ResourceBundle resourceBundle;
 	protected Locale locale;
 	protected Logger sessionGuiLogger;
@@ -17,6 +18,7 @@ public class ApplicationSession {
 
 	private static ApplicationSession session = null;
 	private ApplicationSession() {
+		agenda = new Agenda();
 		locale = Locale.getDefault();
 		resourceBundle = ResourceBundle.getBundle("edu.iut.resources.strings.res");
 		sessionGuiLogger = Logger.getLogger("IUTTrain");
@@ -69,6 +71,8 @@ public class ApplicationSession {
 	public String[] getMonths() {
 		return months;
 	}
-	
-	
+
+	public Agenda getAgenda() {
+		return agenda;
+	}
 }

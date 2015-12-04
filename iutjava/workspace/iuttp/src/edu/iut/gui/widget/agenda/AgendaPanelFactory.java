@@ -2,6 +2,7 @@ package edu.iut.gui.widget.agenda;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JLabel;
@@ -30,19 +31,19 @@ public class AgendaPanelFactory {
 	public AgendaPanelFactory() {
 	}
 	
-	public JPanel getAgendaView(ActiveView activeView) {
-		JPanel agendaView = null;
+	public EventPanel getAgendaView(ActiveView activeView, Date date) {
+		EventPanel agendaView = null;
 		switch (activeView) {
 			case MONTH_VIEW:
-				MonthPanel monthPanel = new MonthPanel();
+				MonthPanel monthPanel = new MonthPanel(date);
 				agendaView = monthPanel;
 				break;
 			case WEEK_VIEW:
-				WeekPanel weekPanel = new WeekPanel();
+				WeekPanel weekPanel = new WeekPanel(date);
 				agendaView = weekPanel;
 				break;
 			case DAY_VIEW:
-				DayPanel dayPanel = new DayPanel(activeView,WeekDayNames.EMPTYDAY);
+				DayPanel dayPanel = new DayPanel(activeView,date);
 				agendaView = dayPanel;
 				break;
 			default:

@@ -1,10 +1,13 @@
 package edu.iut.gui.frames;
 
 import edu.iut.app.ApplicationSession;
+import edu.iut.app.IDateProvider;
+import edu.iut.gui.actions.NewEventAction;
 import edu.iut.gui.listeners.ApplicationErrorMessageDialog;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
 import edu.iut.gui.widget.agenda.ControlAgendaViewPanel;
+import edu.iut.gui.widget.agenda.EventPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,29 +15,41 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Calendar;
+import java.util.Date;
 
 
-public class SchedulerFrame extends JFrame {
+public class SchedulerFrame extends JFrame implements IDateProvider{
 	JPanel contentPane;
 	CardLayout layerLayout;
-	AgendaPanelFactory agendaPanelFactory;	
-	JPanel dayView;
-	JPanel weekView;
-	JPanel monthView;
+	AgendaPanelFactory agendaPanelFactory;
+	EventPanel dayView;
+	EventPanel weekView;
+	EventPanel monthView;
+
+	Date currentDate;
 
 	private ViewChangeListener viewChangeListener = new ViewChangeListener();
 	private NotImplementedListener notImplementedListener = new NotImplementedListener();
 	
 	protected void setupUI() {
-		
+
 		contentPane = new JPanel();
 		layerLayout = new CardLayout();
 		contentPane.setLayout(layerLayout);
+
 		ControlAgendaViewPanel agendaViewPanel = new ControlAgendaViewPanel(layerLayout,contentPane);
+		agendaViewPanel.setDateProvider(this);
+
 		agendaPanelFactory = new AgendaPanelFactory();
-		dayView = agendaPanelFactory.getAgendaView(ActiveView.DAY_VIEW);
-		weekView = agendaPanelFactory.getAgendaView(ActiveView.WEEK_VIEW);
-		monthView = agendaPanelFactory.getAgendaView(ActiveView.MONTH_VIEW);
+
+		Calendar calendar = Calendar.getInstance();
+		currentDate = calendar.getTime();
+
+
+		dayView = agendaPanelFactory.getAgendaView(ActiveView.DAY_VIEW, currentDate);
+		weekView = agendaPanelFactory.getAgendaView(ActiveView.WEEK_VIEW, currentDate);
+		monthView = agendaPanelFactory.getAgendaView(ActiveView.MONTH_VIEW, currentDate);
 		
 		contentPane.add(dayView,ActiveView.DAY_VIEW.name());
 		contentPane.add(weekView,ActiveView.WEEK_VIEW.name());
@@ -46,6 +61,7 @@ public class SchedulerFrame extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu fileMenu = new JMenu(ApplicationSession.instance().getString("file"));
+		fileMenu.add(new JMenuItem(new NewEventAction(ApplicationSession.instance().getAgenda())));
 		fileMenu.add(new NotImplementedMenuItem("load"));
 		fileMenu.add(new NotImplementedMenuItem("save"));
 		fileMenu.add(new NotImplementedMenuItem("quit"));
@@ -72,23 +88,7 @@ public class SchedulerFrame extends JFrame {
 		this.pack();
 		layerLayout.next(contentPane);
 	}
-	
-	public SchedulerFrame() {
-		super();
-		
-		addWindowListener (new WindowAdapter(){
-			public void windowClosing (WindowEvent e){
-				System.exit(0);
-			}
-		});
-		contentPane = null;
-		dayView = null;
-		weekView = null;
-		monthView = null;
-		agendaPanelFactory = null;
-		setupUI();
 
-	}
 	public SchedulerFrame(String title) {
 		super(title);
 		addWindowListener (new WindowAdapter(){
@@ -97,6 +97,16 @@ public class SchedulerFrame extends JFrame {
 			}
 		});
 		setupUI();
+	}
+
+	public Date getDate(){
+		return currentDate;
+	}
+
+	public void setDate(Date date){
+		dayView.setDate(date);
+		weekView.setDate(date);
+		monthView.setDate(date);
 	}
 
 	private class ViewChangeMenuItem extends JMenuItem{

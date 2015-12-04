@@ -1,9 +1,12 @@
 package edu.iut.gui.widget.agenda;
 
-import java.awt.GridLayout;
+import java.awt.*;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JPanel;
 
 
+import edu.iut.app.DateUtils;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
 import edu.iut.app.ApplicationSession;
 
@@ -36,12 +39,34 @@ public class WeekPanel extends EventPanel {
 		}
 	}
 	
-	public WeekPanel() {
-		super(ActiveView.WEEK_VIEW);
+	public WeekPanel(Date date) {
+		super(ActiveView.WEEK_VIEW, date);
+
 		GridLayout daysOfWeekLayout = new GridLayout(1,7);		
 		this.setLayout(daysOfWeekLayout);
+
+		refresh();
+
+	}
+
+	public void refresh(){
+		this.removeAll();
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.set(Calendar.HOUR_OF_DAY, 0);
+		calendar.clear(Calendar.MINUTE);
+		calendar.clear(Calendar.SECOND);
+		calendar.clear(Calendar.MILLISECOND);
+
+		calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+
+		Date d = calendar.getTime();
+
 		for (int di = 0;di<7;di++)	{
-			this.add(new DayPanel(ActiveView.WEEK_VIEW,WeekDayNames.values()[di+1]));
+			this.add(new DayPanel(ActiveView.WEEK_VIEW,d, DateUtils.isSameDate(d, date) ? Color.ORANGE : null));
+			calendar.add(Calendar.DATE, 1);
+			d = calendar.getTime();
 		}
 	}
 }

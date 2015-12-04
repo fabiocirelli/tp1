@@ -1,7 +1,9 @@
 package edu.iut.gui.widget.agenda;
 
-import java.awt.GridLayout;
+import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,37 +13,55 @@ import edu.iut.gui.widget.agenda.WeekPanel.WeekDayNames;
 
 public class DayPanel extends EventPanel {
 
-	public DayPanel(ActiveView activeView,WeekDayNames weekDayNames) {
-		super(activeView);
+	private final static SimpleDateFormat formater = new SimpleDateFormat("EE d");
+
+	private JLabel label;
+
+	public DayPanel(ActiveView activeView, Date date){
+		this(activeView, date, null);
+	}
+
+	public DayPanel(ActiveView activeView,Date date, Color color) {
+		super(activeView, date);
 		switch (activeView) {
 		case DAY_VIEW:
 		case WEEK_VIEW:
 			GridLayout daysLayout;
-			switch(weekDayNames) {
-			case EMPTYDAY:
-				daysLayout = new GridLayout(24,1);
+			if(date == null) {
+				daysLayout = new GridLayout(24, 1);
 				this.setLayout(daysLayout);
 				break;
-			default:
+			}else{
 				daysLayout = new GridLayout(25,1);
 				this.setLayout(daysLayout);
-				this.add(new JLabel(weekDayNames.toString()));
+				label = new JLabel(formater.format(date));
+				this.add(label);
 			}
-						
+
 			for (int hi = 0;hi<24;hi++) {
 				JPanel hour = new JPanel();
-				hour.add(new JLabel(new Integer(hi).toString()));
+				hour.add(new JLabel(Integer.toString(hi)));
 				this.add(hour);
 			}
 			break;
 		case MONTH_VIEW:
 			JPanel hour = new JPanel();
-			hour.add(new JLabel("H"));
+			label = new JLabel(formater.format(date));
+			hour.add(label);
 			this.add(hour);
-		
+
+		}
+
+		if(color != null && label != null){
+			label.setForeground(color);
 		}
 	}
-	
+
+	@Override
+	public void refresh() {
+
+	}
+
 	protected void setupUIDayView() {
 		
 	}

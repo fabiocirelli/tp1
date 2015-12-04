@@ -12,7 +12,8 @@ import java.util.Date;
 
 public class JDateField extends JTextField {
 
-    private static final SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private static final String FORMAT_HINT = "jj/mm/aaaa hh:mm";
 
     private Date date;
     private boolean emptyState;
@@ -27,16 +28,24 @@ public class JDateField extends JTextField {
         addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent event) {
-
+                if(emptyState){
+                    setText("");
+                    emptyState = false;
+                }
             }
 
             @Override
             public void focusLost(FocusEvent event) {
-                try {
-                    setDate(formater.parse(getText()));
+                if(!emptyState && getText().length() > 0) {
+                    try {
+                        setDate(formater.parse(getText()));
 
-                } catch (ParseException e) {
-                    new ApplicationErrorMessageDialog().newMessage("Erreur", ApplicationSession.instance().getString("parseDateError"));
+                    } catch (ParseException e) {
+                        new ApplicationErrorMessageDialog().newMessage("Erreur", ApplicationSession.instance().getString("parseDateError"));
+                        setDate(null);
+                    }
+                }else{
+                    setDate(null);
                 }
             }
         });
@@ -47,7 +56,7 @@ public class JDateField extends JTextField {
         this.date = date;
 
         if(date == null){
-            setText("jj/mm/aaaa");
+            setText(FORMAT_HINT);
             emptyState = true;
         }else{
             setText(formater.format(date));
