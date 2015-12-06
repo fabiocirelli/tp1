@@ -27,7 +27,13 @@ public class AgendaPanelFactory {
 	public AgendaPanelFactory(Agenda agenda) {
 		this.agenda = agenda;
 	}
-	
+
+	/**
+	 * Crée une vue
+	 * @param activeView la vue à créer
+	 * @param date la date courante
+     * @return vue
+     */
 	public TimePanel getAgendaView(ActiveView activeView, Date date) {
 		TimePanel agendaView = null;
 		switch (activeView) {

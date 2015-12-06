@@ -25,7 +25,10 @@ public class DatePicker extends JPanel implements ChangeListener, ItemListener {
 
 	private final Border errorBorder = BorderFactory.createMatteBorder(1, 1, 1, 1,Color.RED);
 	private final Border defaultBorder = BorderFactory.createEmptyBorder(1,1,1,1);
-	
+
+	/**
+	 * Datepicker constitué de deux combobox pour le jour et le mois et d'un spinner pour l'année
+	 */
 	public DatePicker() {
 
 		calendar = new GregorianCalendar();
@@ -57,6 +60,10 @@ public class DatePicker extends JPanel implements ChangeListener, ItemListener {
 	}
 
 
+	/**
+	 * Définit le fournisseur de date que ce DatePicker contrôle
+	 * @param provider
+     */
 	public void setDateProvider(IDateProvider provider){
 
 		calendar.setTime(provider.getDate());
@@ -68,24 +75,26 @@ public class DatePicker extends JPanel implements ChangeListener, ItemListener {
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		calendar.set(Calendar.YEAR, (int) yearSpinner.getValue());
 		update(Calendar.YEAR, (int) yearSpinner.getValue());
 	}
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		if(e.getSource() == monthsCombo) {
-			calendar.set(Calendar.MONTH, monthsCombo.getSelectedIndex());
 			update(Calendar.MONTH, monthsCombo.getSelectedIndex());
 		}else if(e.getSource() == daysCombo) {
-			calendar.set(Calendar.DAY_OF_MONTH, daysCombo.getSelectedIndex()+1);
 			update(Calendar.DAY_OF_MONTH, daysCombo.getSelectedIndex()+1);
 		}
 	}
 
+	/**
+	 * Met à jour la date
+	 * @param field
+	 * @param value
+     */
 	private void update(int field, int value){
 		try {
-
+			calendar.setTime(provider.getDate());
 			calendar.set(field, value);
 
 			if (provider != null)

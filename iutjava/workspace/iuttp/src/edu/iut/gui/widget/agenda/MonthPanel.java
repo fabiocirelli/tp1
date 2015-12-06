@@ -13,6 +13,11 @@ import java.util.GregorianCalendar;
 public class MonthPanel extends TimePanel {
 
 
+	/**
+	 * Vue d'un mois
+	 * @param agenda
+	 * @param date
+     */
 	public MonthPanel(Agenda agenda, Date date) {
 		super(ActiveView.MONTH_VIEW, agenda, date);
 
@@ -47,7 +52,7 @@ public class MonthPanel extends TimePanel {
 		}
 
 		do{
-			this.add(new DayPanel(ActiveView.MONTH_VIEW, agenda, d, DateUtils.isSameDate(d, date) ? Color.ORANGE : null));
+			this.add(new DayPanel(ActiveView.MONTH_VIEW, agenda, d, DateUtils.isSameDate(d, date) ? Color.RED : null));
 
 			calendar.add(Calendar.DATE, 1);
 			d = calendar.getTime();

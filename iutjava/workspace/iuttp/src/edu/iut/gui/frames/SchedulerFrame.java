@@ -10,8 +10,6 @@ import edu.iut.gui.widget.generic.DatePicker;
 import edu.iut.gui.widget.agenda.TimePanel;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +31,10 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 
 	private ViewChangeListener viewChangeListener = new ViewChangeListener();
 	private NotImplementedListener notImplementedListener = new NotImplementedListener();
-	
+
+	/**
+	 * Génère l'interface graphique
+	 */
 	protected void setupUI() {
 
 		Calendar calendar = Calendar.getInstance();
@@ -49,8 +50,15 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		weekView = agendaPanelFactory.getAgendaView(ActiveView.WEEK_VIEW, currentDate);
 		monthView = agendaPanelFactory.getAgendaView(ActiveView.MONTH_VIEW, currentDate);
 
-		DatePicker agendaViewPanel = new DatePicker();
-		agendaViewPanel.setDateProvider(this);
+		JPanel agendaViewPanel = new JPanel();
+		DatePicker datePicker = new DatePicker();
+		datePicker.setDateProvider(this);
+
+		JButton addButton = new JButton(ApplicationSession.instance().getString("new"));
+		addButton.addActionListener(new NewEventAction(ApplicationSession.instance().getAgenda(), this));
+
+		agendaViewPanel.add(datePicker);
+		agendaViewPanel.add(addButton);
 		
 		contentPane.add(dayView,ActiveView.DAY_VIEW.name());
 		contentPane.add(weekView,ActiveView.WEEK_VIEW.name());
@@ -58,7 +66,7 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 	
 		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT,agendaViewPanel, contentPane);
 		this.setContentPane(splitPane);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu fileMenu = new JMenu(ApplicationSession.instance().getString("file"));
@@ -89,19 +97,16 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		this.pack();
 		layerLayout.next(contentPane);
 
-		ApplicationSession.instance().getAgenda().addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				dayView.refresh();
-				weekView.refresh();
-				monthView.refresh();
+		ApplicationSession.instance().getAgenda().addChangeListener(e -> {
+            dayView.refresh();
+            weekView.refresh();
+            monthView.refresh();
 
-				dayView.revalidate();
-				weekView.revalidate();
-				monthView.revalidate();
+            dayView.revalidate();
+            weekView.revalidate();
+            monthView.revalidate();
 
-			}
-		});
+        });
 	}
 
 	public SchedulerFrame(String title) {
@@ -114,16 +119,29 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		setupUI();
 	}
 
+	/**
+	 * Renvoie la date courante sélectionné dans l'interface
+	 * @return
+     */
 	public Date getDate(){
 		return currentDate;
 	}
 
+	/**
+	 * Change la date courante sélectionné dans l'interface
+	 * @param date
+     */
 	public void setDate(Date date){
 		dayView.setDate(date);
 		weekView.setDate(date);
 		monthView.setDate(date);
+
+		this.currentDate = date;
 	}
 
+	/**
+	 * Elément de menu permettant de changer de vue
+	 */
 	private class ViewChangeMenuItem extends JMenuItem{
 
 		private ActiveView view;
@@ -139,6 +157,9 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		}
 	}
 
+	/**
+	 * Elément de menu non implémenté
+	 */
 	private class NotImplementedMenuItem extends JMenuItem{
 
 		public NotImplementedMenuItem(String name){
@@ -148,6 +169,9 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		}
 	}
 
+	/**
+	 * Listener appelé quand la vue change
+	 */
 	private class ViewChangeListener implements ActionListener{
 
 		@Override
@@ -158,6 +182,9 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		}
 	}
 
+	/**
+	 * Interaction à une une fonctionnalité non implémenté.
+	 */
 	private class NotImplementedListener implements ActionListener{
 
 		@Override

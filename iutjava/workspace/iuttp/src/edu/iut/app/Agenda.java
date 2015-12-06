@@ -16,9 +16,9 @@ public class Agenda extends LinkedList<ExamEvent> {
         this.listeners = new ArrayList<>();
 
         // Génération d'étudiants Fake
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Aurélien", "Dupont"));
         persons.add(new Person(Person.PersonFunction.STUDENT, "Alexandre", "Dupont"));
         persons.add(new Person(Person.PersonFunction.STUDENT, "Arthur", "Dupont"));
+        persons.add(new Person(Person.PersonFunction.STUDENT, "Aurélien", "Dupont"));
         persons.add(new Person(Person.PersonFunction.STUDENT, "Bernard", "Dupont"));
         persons.add(new Person(Person.PersonFunction.STUDENT, "Clément", "Dupont"));
         persons.add(new Person(Person.PersonFunction.STUDENT, "Camille", "Dupont"));
@@ -46,7 +46,11 @@ public class Agenda extends LinkedList<ExamEvent> {
         persons.add(new Person(Person.PersonFunction.STUDENT, "Thibault", "Dupont"));
         persons.add(new Person(Person.PersonFunction.STUDENT, "Timoté", "Dupont"));
 	}
-	
+
+    /**
+     * Ajoute un évènement à l'agenda
+     * @param examEvent Evenement à ajouter
+     */
 	public void addCheckedEvent(ExamEvent examEvent) {
 
         this.add(examEvent);
@@ -72,6 +76,11 @@ public class Agenda extends LinkedList<ExamEvent> {
         }
     }
 
+    /**
+     * Supprimer un évènement
+     * @param o Evènement à supprimer
+     * @return true si l'évènement était dans l'agenda
+     */
     @Override
     public boolean remove(Object o) {
         boolean result = super.remove(o);
@@ -85,10 +94,19 @@ public class Agenda extends LinkedList<ExamEvent> {
         return result;
     }
 
+    /**
+     * Récupère la liste des personnes enregistrés
+     * @return liste de personnes
+     */
     public ArrayList<Person> getPersons() {
         return persons;
     }
 
+    /**
+     * Retourne tous les évènements dont la date est celle passé en paramètre. Les heures sont ignorés.
+     * @param date la date
+     * @return liste d'évènements filtrés
+     */
     public List<ExamEvent> getByDay(Date date){
         DateCriteria criteria = new DateCriteria(date);
         List<ExamEvent> events = criteria.meetCriteria(this);
@@ -96,6 +114,10 @@ public class Agenda extends LinkedList<ExamEvent> {
         return events;
     }
 
+    /**
+     * Ajoute un listener qui sera appelé chaque fois que le contenu de l'agenda change
+     * @param listener
+     */
     public void addChangeListener(ChangeListener listener){
         this.listeners.add(listener);
     }

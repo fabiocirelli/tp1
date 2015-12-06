@@ -12,6 +12,12 @@ public abstract class TimePanel extends JPanel {
     protected Agenda agenda;
     protected Date date;
 
+    /**
+     * Vue d'un élément temporel
+     * @param activeView
+     * @param agenda
+     * @param date
+     */
     public TimePanel(AgendaPanelFactory.ActiveView activeView, Agenda agenda, Date date) {
         this.activeView = activeView;
         this.date = date;
@@ -22,12 +28,19 @@ public abstract class TimePanel extends JPanel {
 
     }
 
+    /**
+     * Définit la date associé à la vue
+     * @param date
+     */
     public void setDate(Date date){
         this.date = date;
         refresh();
         revalidate();
     }
 
+    /**
+     * Crée ou recrée la vue
+     */
     public abstract void refresh();
 
 

@@ -40,7 +40,7 @@ public class ExamEventWidget extends JFrame implements IDateProvider {
 
         dateField = new DatePicker();
         dateField.setDateProvider(this);
-        timeField = new TimePicker();
+        timeField = new TimePicker(ApplicationSession.DAY_START, ApplicationSession.DAY_END);
         timeField.setDateProvider(this);
         studentCombo = new JComboBoxAutoComplete(agenda.getPersons());
         //studentField = new JTextFieldAutoComplete(agenda.getPersons(), studentCombo);
@@ -53,14 +53,14 @@ public class ExamEventWidget extends JFrame implements IDateProvider {
         gbc.fill=GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        content.add(new JLabel("Date"), gbc);
+        content.add(new JLabel(ApplicationSession.instance().getString("date")), gbc);
         gbc.gridx = 1;
         content.add(dateField, gbc);
 
         gbc.gridy = 1;
 
         gbc.gridx = 0;
-        content.add(new JLabel("Heure"), gbc);
+        content.add(new JLabel(ApplicationSession.instance().getString("time")), gbc);
 
         gbc.gridx = 1;
         content.add(timeField, gbc);
@@ -68,7 +68,7 @@ public class ExamEventWidget extends JFrame implements IDateProvider {
         gbc.gridy = 2;
 
         gbc.gridx = 0;
-        content.add(new JLabel("Etudiant"), gbc);
+        content.add(new JLabel(ApplicationSession.instance().getString("student")), gbc);
         gbc.gridx = 1;
         content.add(studentCombo, gbc);
 

@@ -40,6 +40,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
 
+/**
+ * Combobox associé à un JTexfield autocomplété.
+ * Classe tierce.
+ */
 public class JComboBoxAutoComplete extends JComboBox {
     private class AutoTextFieldEditor extends BasicComboBoxEditor {
 
@@ -94,10 +98,8 @@ public class JComboBoxAutoComplete extends JComboBox {
 
     void setSelectedValue(Object obj) {
         if (isFired) {
-            System.out.println("return sel : " + obj);
             return;
         } else {
-            System.out.println("set sel : " + obj + " - " + obj.getClass().getName());
             isFired = true;
             setSelectedItem(obj);
             fireItemStateChanged(new ItemEvent(this, 701, selectedItemReminder,

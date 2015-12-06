@@ -16,6 +16,12 @@ import javax.swing.border.EmptyBorder;
 public class WeekPanel extends TimePanel {
 
 	private JPanel calendar;
+
+	/**
+	 * Vue d'une semaine
+	 * @param agenda
+	 * @param date
+     */
 	public WeekPanel(Agenda agenda, Date date) {
 		super(ActiveView.WEEK_VIEW, agenda, date);
 
@@ -49,7 +55,7 @@ public class WeekPanel extends TimePanel {
 		Date d = cal.getTime();
 
 		for (int di = 0;di<7;di++)	{
-			calendar.add(new DayPanel(ActiveView.WEEK_VIEW, agenda, d, DateUtils.isSameDate(d, date) ? Color.ORANGE : null));
+			calendar.add(new DayPanel(ActiveView.WEEK_VIEW, agenda, d, DateUtils.isSameDate(d, date) ? Color.RED : null));
 			cal.add(Calendar.DATE, 1);
 			d = cal.getTime();
 		}

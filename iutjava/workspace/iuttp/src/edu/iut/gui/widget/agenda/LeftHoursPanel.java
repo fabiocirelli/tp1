@@ -8,6 +8,11 @@ import java.awt.*;
 
 public class LeftHoursPanel extends JPanel {
 
+    /**
+     * Bandeau affichant toutes les heures de la journée
+     * @param start heure minimale
+     * @param end heure maximale
+     */
     public LeftHoursPanel(int start, int end) {
 
         setLayout(new GridLayout(ApplicationSession.NB_HOURS+1,1));
