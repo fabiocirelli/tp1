@@ -1,5 +1,6 @@
 package edu.iut.tools;
 
+import java.awt.*;
 import java.util.Locale;
 
 import edu.iut.app.CommandLineOption;
@@ -18,6 +19,7 @@ public class IUTScheduler {
 		System.err.println("Option:"+commandLineParser.getOption("config").getValue());
 		SwingUtilities.invokeLater(() -> {
             JFrame mainFrame = new edu.iut.gui.frames.SchedulerFrame("IUT Scheduler");
+			mainFrame.setSize(new Dimension(1200,800));
             mainFrame.setVisible(true);
         });
 	}

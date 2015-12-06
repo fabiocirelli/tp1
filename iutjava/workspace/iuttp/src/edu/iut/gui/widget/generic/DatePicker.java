@@ -1,4 +1,4 @@
-package edu.iut.gui.widget.agenda;
+package edu.iut.gui.widget.generic;
 
 import edu.iut.app.ApplicationSession;
 import edu.iut.app.IDateProvider;
@@ -7,19 +7,15 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class ControlAgendaViewPanel extends JPanel implements ChangeListener, ItemListener {
+public class DatePicker extends JPanel implements ChangeListener, ItemListener {
 
 	private IDateProvider provider;
-
-	private CardLayout agendaViewLayout;
-	private JPanel contentPane;
 
 	private JSpinner yearSpinner;
 	private JComboBox<String> monthsCombo;
@@ -30,13 +26,10 @@ public class ControlAgendaViewPanel extends JPanel implements ChangeListener, It
 	private final Border errorBorder = BorderFactory.createMatteBorder(1, 1, 1, 1,Color.RED);
 	private final Border defaultBorder = BorderFactory.createEmptyBorder(1,1,1,1);
 	
-	public ControlAgendaViewPanel(CardLayout layerLayout, final JPanel contentPane) {
+	public DatePicker() {
 
 		calendar = new GregorianCalendar();
 		calendar.setLenient(false);
-
-		this.agendaViewLayout = layerLayout;
-		this.contentPane = contentPane;
 
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		int minYear = year-year%10;
@@ -51,20 +44,26 @@ public class ControlAgendaViewPanel extends JPanel implements ChangeListener, It
 		for(int i = 1; i <= 31; i++) days[i-1] = i;
 		daysCombo = new JComboBox<>(days);
 
-		yearSpinner.addChangeListener(this);
-		monthsCombo.addItemListener(this);
 		daysCombo.addItemListener(this);
+		monthsCombo.addItemListener(this);
+		yearSpinner.addChangeListener(this);
 
-		add(yearSpinner);
-		add(monthsCombo);
 		add(daysCombo);
+		add(monthsCombo);
+		add(yearSpinner);
+
 
 		setBorder(defaultBorder);
 	}
 
 
 	public void setDateProvider(IDateProvider provider){
+
+		calendar.setTime(provider.getDate());
 		this.provider = provider;
+		this.yearSpinner.setValue(calendar.get(Calendar.YEAR));
+		this.monthsCombo.setSelectedIndex(calendar.get(Calendar.MONTH));
+		this.daysCombo.setSelectedIndex(calendar.get(Calendar.DAY_OF_MONTH)-1);
 	}
 
 	@Override

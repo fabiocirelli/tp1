@@ -1,16 +1,12 @@
 package edu.iut.gui.widget.agenda;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import edu.iut.app.Agenda;
+
 import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import edu.iut.gui.widget.agenda.WeekPanel.WeekDayNames;
 
 public class AgendaPanelFactory {
+
+	private Agenda agenda;
 
 	public enum ActiveView{
 		MONTH_VIEW("Month View"),
@@ -28,22 +24,23 @@ public class AgendaPanelFactory {
 		}		
 	}
 	
-	public AgendaPanelFactory() {
+	public AgendaPanelFactory(Agenda agenda) {
+		this.agenda = agenda;
 	}
 	
-	public EventPanel getAgendaView(ActiveView activeView, Date date) {
-		EventPanel agendaView = null;
+	public TimePanel getAgendaView(ActiveView activeView, Date date) {
+		TimePanel agendaView = null;
 		switch (activeView) {
 			case MONTH_VIEW:
-				MonthPanel monthPanel = new MonthPanel(date);
+				MonthPanel monthPanel = new MonthPanel(agenda, date);
 				agendaView = monthPanel;
 				break;
 			case WEEK_VIEW:
-				WeekPanel weekPanel = new WeekPanel(date);
+				WeekPanel weekPanel = new WeekPanel(agenda, date);
 				agendaView = weekPanel;
 				break;
 			case DAY_VIEW:
-				DayPanel dayPanel = new DayPanel(activeView,date);
+				DayPanel dayPanel = new DayPanel(activeView, agenda, date);
 				agendaView = dayPanel;
 				break;
 			default:

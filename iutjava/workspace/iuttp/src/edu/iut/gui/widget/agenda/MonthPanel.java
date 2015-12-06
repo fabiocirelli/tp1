@@ -1,5 +1,6 @@
 package edu.iut.gui.widget.agenda;
 
+import edu.iut.app.Agenda;
 import edu.iut.app.DateUtils;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
 
@@ -9,11 +10,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class MonthPanel extends EventPanel {
+public class MonthPanel extends TimePanel {
 
 
-	public MonthPanel(Date date) {
-		super(ActiveView.MONTH_VIEW, date);
+	public MonthPanel(Agenda agenda, Date date) {
+		super(ActiveView.MONTH_VIEW, agenda, date);
 
 		GridLayout daysOfMonthLayout = new GridLayout(6,7);
 		this.setLayout(daysOfMonthLayout);
@@ -46,7 +47,7 @@ public class MonthPanel extends EventPanel {
 		}
 
 		do{
-			this.add(new DayPanel(ActiveView.MONTH_VIEW,d, DateUtils.isSameDate(d, date) ? Color.ORANGE : null));
+			this.add(new DayPanel(ActiveView.MONTH_VIEW, agenda, d, DateUtils.isSameDate(d, date) ? Color.ORANGE : null));
 
 			calendar.add(Calendar.DATE, 1);
 			d = calendar.getTime();

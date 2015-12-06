@@ -10,28 +10,30 @@ public class DateCriteria implements Criteria<ExamEvent> {
     private Date end;
 
     public DateCriteria(Date date){
-        Calendar cal = Calendar.getInstance();
+        this(date, date);
+    }
 
+    public DateCriteria(Date begin, Date end){
+        this.begin = begin;
+        this.end = end;
+
+        Calendar cal = Calendar.getInstance();
 
         cal.setTime(begin);
         cal.set(Calendar.HOUR, 0);
         cal.set(Calendar.MINUTE, 0);
         this.begin = cal.getTime();
 
-        cal.setTime(begin);
+        cal.setTime(end);
         cal.set(Calendar.HOUR, 23);
         cal.set(Calendar.MINUTE, 59);
         this.end = cal.getTime();
     }
 
-    public DateCriteria(Date begin, Date end){
-        this.begin = begin;
-        this.end = end;
-    }
-
     @Override
     public List<ExamEvent> meetCriteria(List<ExamEvent> elements) {
-        ListIterator<ExamEvent> iterator = new ArrayList<>(elements).listIterator();
+        List<ExamEvent> out = new ArrayList<>(elements);
+        ListIterator<ExamEvent> iterator = out.listIterator();
         while (iterator.hasNext()){
             Date examDate = iterator.next().getExamDate();
             boolean match;
@@ -48,7 +50,7 @@ public class DateCriteria implements Criteria<ExamEvent> {
 
         }
 
-        return elements;
+        return out;
 
     }
 }

@@ -1,7 +1,7 @@
 package edu.iut.app;
 
 public class Person {
-	
+
 	public enum PersonFunction{
 		/* EX2 : Internationalisation */
 		NONE("None"),
@@ -21,6 +21,10 @@ public class Person {
 	
 	public Person() {
 		personFunction = PersonFunction.NONE;
+	}
+
+	public Person(PersonFunction personFunction, String firstname, String lastname){
+		this(personFunction,firstname,lastname, null, null);
 	}
 	
 	public Person(PersonFunction personFunction,
@@ -74,6 +78,14 @@ public class Person {
 	protected String lastname;
 	protected String email;
 	protected String phone;
+
+	public String getFullName() {
+		return getFirstname() + " " + getLastname();
+	}
+
+	public String toString(){
+		return getFullName();
+	}
 	
 
 }

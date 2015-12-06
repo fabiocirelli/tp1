@@ -15,6 +15,10 @@ public class ApplicationSession {
 	protected String[] months;
 	protected String[] days;
 
+	public static int DAY_START = 7;
+	public static int DAY_END = 18;
+	public static int NB_HOURS = DAY_END-DAY_START+1;
+
 
 	private static ApplicationSession session = null;
 	private ApplicationSession() {

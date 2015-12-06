@@ -1,76 +1,183 @@
 package edu.iut.gui.widget.agenda;
 
-import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
+import edu.iut.app.Agenda;
+import edu.iut.app.ApplicationSession;
+import edu.iut.app.ExamEvent;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
-import edu.iut.gui.widget.agenda.WeekPanel.WeekDayNames;
+import edu.iut.gui.widget.generic.DeleteButton;
 
-public class DayPanel extends EventPanel {
+import javax.swing.*;
+import java.awt.*;
+import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
-	private final static SimpleDateFormat formater = new SimpleDateFormat("EE d");
+public class DayPanel extends TimePanel {
 
-	private JLabel label;
+    private final static SimpleDateFormat formater = new SimpleDateFormat("EE d");
 
-	public DayPanel(ActiveView activeView, Date date){
-		this(activeView, date, null);
-	}
+    private JLabel label;
+    private HashMap<Integer, List<ExamEvent>> eventsHours;
 
-	public DayPanel(ActiveView activeView,Date date, Color color) {
-		super(activeView, date);
-		switch (activeView) {
-		case DAY_VIEW:
-		case WEEK_VIEW:
-			GridLayout daysLayout;
-			if(date == null) {
-				daysLayout = new GridLayout(24, 1);
-				this.setLayout(daysLayout);
-				break;
-			}else{
-				daysLayout = new GridLayout(25,1);
-				this.setLayout(daysLayout);
-				label = new JLabel(formater.format(date));
-				this.add(label);
-			}
+    public DayPanel(ActiveView activeView, Agenda agenda, Date date){
+        this(activeView, agenda, date, null);
+    }
 
-			for (int hi = 0;hi<24;hi++) {
-				JPanel hour = new JPanel();
-				hour.add(new JLabel(Integer.toString(hi)));
-				this.add(hour);
-			}
-			break;
-		case MONTH_VIEW:
-			JPanel hour = new JPanel();
-			label = new JLabel(formater.format(date));
-			hour.add(label);
-			this.add(hour);
+    public DayPanel(ActiveView activeView, Agenda agenda, Date date, Color color) {
+        super(activeView, agenda, date);
+        refresh();
 
-		}
+        if(color != null && label != null){
+            label.setForeground(color);
+        }
+    }
 
-		if(color != null && label != null){
-			label.setForeground(color);
-		}
-	}
+    @Override
+    public void refresh() {
 
-	@Override
-	public void refresh() {
+        removeAll();
+        classifyByHour(agenda.getByDay(date));
 
-	}
+        switch (activeView) {
+            case DAY_VIEW:
+                setupUISingleDayView();
+                break;
+            case WEEK_VIEW:
+                setupUIStandardView();
+                break;
+            case MONTH_VIEW:
+                setupUIMinifiedView();
 
-	protected void setupUIDayView() {
-		
-	}
-	protected void setupUIWeekView() {
-		
-	}
-	protected void setupUIMonthView() {
-		
-	}
+        }
+    }
+
+    private void classifyByHour(List<ExamEvent> events){
+        eventsHours = new HashMap<>();
+        Calendar calendar = new GregorianCalendar();
+
+        events.stream().forEach(e -> {
+            calendar.setTime(e.getExamDate());
+            Integer h = calendar.get(Calendar.HOUR_OF_DAY);
+            if(eventsHours.containsKey(h)){
+                eventsHours.get(h).add(e);
+            }else{
+                eventsHours.put(h, new ArrayList<ExamEvent>(){{ add(e); }});
+            }
+
+        });
+
+    }
+
+    protected void setupUIStandardView() {
+        GridLayout daysLayout;
+        if(date == null) {
+            daysLayout = new GridLayout(ApplicationSession.NB_HOURS, 1);
+            this.setLayout(daysLayout);
+            return;
+        }else{
+            daysLayout = new GridLayout(ApplicationSession.NB_HOURS+1,1);
+            this.setLayout(daysLayout);
+            label = new JLabel(formater.format(date));
+            this.add(label);
+        }
+
+        this.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        for (int hi = ApplicationSession.DAY_START;hi<=ApplicationSession.DAY_END;hi++) {
+            this.add(new HourPanel(hi, eventsHours.get(hi)));
+        }
+    }
+
+    protected void setupUISingleDayView() {
+
+        setLayout(new BorderLayout());
+
+        LeftHoursPanel hours = new LeftHoursPanel(ApplicationSession.DAY_START, ApplicationSession.DAY_END);
+        JPanel dayHours = new JPanel(new GridLayout(ApplicationSession.NB_HOURS+1,1));
+        dayHours.add(new JLabel(formater.format(date)));
+
+        for (int hi = ApplicationSession.DAY_START;hi<=ApplicationSession.DAY_END;hi++) {
+            dayHours.add(new HourPanel(hi, eventsHours.get(hi)));
+        }
+
+        add(hours, BorderLayout.WEST);
+        add(dayHours, BorderLayout.CENTER);
+    }
+
+    public void setupUIMinifiedView(){
+
+    }
+
+    public class HourPanel extends JPanel{
+
+        public HourPanel(int hour, List<ExamEvent> events){
+
+            setLayout(new GridBagLayout());
+            setBorder(BorderFactory.createMatteBorder(1,1,0,0,Color.LIGHT_GRAY));
+            setOpaque(false);
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.anchor = GridBagConstraints.FIRST_LINE_START;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+
+
+            if(events != null) {
+                for (ExamEvent event : events) {
+                    JPanel eventPanel = new JPanel(new BorderLayout());
+
+                    JLabel eventName = new JLabel(event.getStudent().getFullName());
+                    DeleteButton<ExamEvent> delete = new DeleteButton<>(event, agenda);
+                    Dimension d = new Dimension(25,25);
+                    delete.setOpaque(false);
+                    delete.setBorder(BorderFactory.createMatteBorder(0,1,0,0,Color.RED));
+                    delete.setBackground(new Color(0,0,0,0));
+                    delete.setForeground(Color.RED);
+                    delete.setMaximumSize(d);
+                    delete.setPreferredSize(d);
+                    delete.setMinimumSize(d);
+
+                    eventPanel.add(eventName, BorderLayout.CENTER);
+                    eventPanel.add(delete, BorderLayout.EAST);
+
+                    d = eventPanel.getPreferredSize();
+                    d.height = 15;
+                    eventPanel.setMinimumSize(d);
+                    eventPanel.setPreferredSize(d);
+                    eventPanel.setMaximumSize(d);
+
+
+
+                    //eventPanel.setBorder(BorderFactory.createLineBorder(Color.RED));
+
+                    add(eventPanel, gbc);
+                    gbc.gridy++;
+                }
+            }
+
+
+            //JLabel eventName = new JLabel();
+
+            /*if(events != null && !events.isEmpty()){
+                eventName.setText(events.get(0).getStudent().getFullName());
+                eventName.setBackground(Color.CYAN);
+            }*/
+
+            //setBackground(Color.CYAN);
+
+            /*hourLbl.setAlignmentX(Component.LEFT_ALIGNMENT);
+            eventName.setAlignmentX(Component.LEFT_ALIGNMENT);
+            JButton test = new JButton();*/
+			/*setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+			setPreferredSize(new Dimension(30, 20));
+			setMinimumSize(new Dimension(30, 20));*/
+            //add(hourLbl);
+            //add(test);
+        }
+    }
 
 
 }
