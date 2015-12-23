@@ -9,6 +9,7 @@ import edu.iut.utils.I18N;
 import edu.iut.utils.JComboBoxAutoComplete;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -25,11 +26,13 @@ public class ExamEventDialog extends JDialog implements IDateProvider {
     private Date date;
     private ArrayList<Person> students;
 
-    public ExamEventDialog(Agenda agenda, Date selectedDate){
-        this(agenda, new ExamEvent(selectedDate));
+    public ExamEventDialog(Agenda agenda, Window owner, Date selectedDate){
+        this(agenda, owner, new ExamEvent(selectedDate));
     }
 
-    public ExamEventDialog(Agenda agenda, ExamEvent event){
+    public ExamEventDialog(Agenda agenda, Window owner, ExamEvent event){
+
+        super(owner, ModalityType.APPLICATION_MODAL);
 
         this.agenda = agenda;
         this.event = event;

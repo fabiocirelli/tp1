@@ -7,6 +7,7 @@ import edu.iut.gui.widget.generic.IFormFilledListener;
 import edu.iut.utils.I18N;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class PersonDialog extends JDialog {
 
@@ -18,8 +19,9 @@ public class PersonDialog extends JDialog {
     private Field<JTextField> mail;
     private Field<JTextField> phone;
 
-    public PersonDialog(Person.PersonFunction function){
+    public PersonDialog(Person.PersonFunction function, Window owner){
 
+        super(owner, ModalityType.APPLICATION_MODAL);
         Form form = new Form();
 
         this.function = function;

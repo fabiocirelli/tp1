@@ -16,12 +16,12 @@ public class PersonsWidget extends JPanel implements IFormFilledListener<Person>
     private JList<Person> list;
     private JButton button;
 
-    public PersonsWidget(Agenda agenda, Person.PersonFunction function){
+    public PersonsWidget(Agenda agenda, Window owner, Person.PersonFunction function){
         this.agenda = agenda;
         this.function = function;
 
         list = new JList<>();
-        button = new JButton(new NewPersonAction(agenda, function, this));
+        button = new JButton(new NewPersonAction(agenda, owner, function, this));
         pane = new JScrollPane(list);
         pane.setPreferredSize(new Dimension(pane.getPreferredSize().width, 300));
         updateData();

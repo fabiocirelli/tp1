@@ -56,7 +56,7 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		datePicker.setDateProvider(this);
 
 		JButton addButton = new JButton(ApplicationSession.instance().getString("new"));
-		addButton.addActionListener(new NewEventAction(ApplicationSession.instance().getAgenda(), this));
+		addButton.addActionListener(new NewEventAction(ApplicationSession.instance().getAgenda(), this, this));
 
 		agendaViewPanel.add(datePicker);
 		agendaViewPanel.add(addButton);
@@ -71,7 +71,7 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu fileMenu = new JMenu(ApplicationSession.instance().getString("file"));
-		fileMenu.add(new JMenuItem(new NewEventAction(ApplicationSession.instance().getAgenda(), this)));
+		fileMenu.add(new JMenuItem(new NewEventAction(ApplicationSession.instance().getAgenda(), this, this)));
 		fileMenu.add(new NotImplementedMenuItem("load"));
 		fileMenu.add(new NotImplementedMenuItem("save"));
 		fileMenu.add(new NotImplementedMenuItem("quit"));
@@ -85,7 +85,7 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 			add(new ViewChangeMenuItem(ActiveView.DAY_VIEW));
 		}});
 
-		editMenu.add(new JMenuItem(new ManagePersonsAction(ApplicationSession.instance().getAgenda())));
+		editMenu.add(new JMenuItem(new ManagePersonsAction(ApplicationSession.instance().getAgenda(), this)));
 
 		JMenu helpMenu = new JMenu(ApplicationSession.instance().getString("help"));
 		helpMenu.add(fileMenu.add(new NotImplementedMenuItem("display")));
