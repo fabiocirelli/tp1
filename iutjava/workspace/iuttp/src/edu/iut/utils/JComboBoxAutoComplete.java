@@ -58,7 +58,6 @@ public class JComboBoxAutoComplete extends JComboBox {
 
     public JComboBoxAutoComplete(java.util.List list) {
         isFired = false;
-        autoTextFieldEditor = new AutoTextFieldEditor(list);
         setEditable(true);
         setModel(new DefaultComboBoxModel(list.toArray()) {
 
@@ -68,6 +67,8 @@ public class JComboBoxAutoComplete extends JComboBox {
             }
 
         });
+
+        autoTextFieldEditor = new AutoTextFieldEditor(list);
         setEditor(autoTextFieldEditor);
     }
 

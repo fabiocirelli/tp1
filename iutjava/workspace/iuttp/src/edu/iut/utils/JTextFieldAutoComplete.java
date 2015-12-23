@@ -63,7 +63,7 @@ public class JTextFieldAutoComplete extends JTextField {
                 return;
             }
             if (autoComboBox != null && idx != null)
-                autoComboBox.setSelectedValue(dataList.get(idx));
+                autoComboBox.setSelectedIndex(idx);
             super.remove(0, getLength());
             super.insertString(0, dataList.get(idx).toString(), attributeset);
             setSelectionStart(j + 1);
@@ -82,7 +82,7 @@ public class JTextFieldAutoComplete extends JTextField {
                 super.insertString(0, dataList.get(idx).toString(), null);
             }
             if (autoComboBox != null && idx != null)
-                autoComboBox.setSelectedValue(dataList.get(idx));
+                autoComboBox.setSelectedIndex(idx);
             try {
                 setSelectionStart(k);
                 setSelectionEnd(getLength());

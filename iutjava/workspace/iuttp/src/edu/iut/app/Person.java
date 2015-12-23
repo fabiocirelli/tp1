@@ -1,6 +1,6 @@
 package edu.iut.app;
 
-public class Person {
+public class Person implements Comparable {
 
 	public enum PersonFunction{
 		/* EX2 : Internationalisation */
@@ -86,6 +86,20 @@ public class Person {
 	public String toString(){
 		return getFullName();
 	}
-	
+
+	@Override
+	public int compareTo(Object o) {
+		if(o instanceof Person){
+			Person p = (Person) o;
+			int c = getLastname().compareTo(p.getLastname());
+			if(c != 0){
+				return c;
+			}else{
+				return getFirstname().compareTo(p.getFirstname());
+			}
+		}else{
+			return 0;
+		}
+	}
 
 }

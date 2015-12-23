@@ -12,8 +12,6 @@ public class ApplicationSession {
 	protected Locale locale;
 	protected Logger sessionGuiLogger;
 	protected Logger sessionExceptionLogger;
-	protected String[] months;
-	protected String[] days;
 
 	public static int DAY_START = 7;
 	public static int DAY_END = 18;
@@ -29,18 +27,6 @@ public class ApplicationSession {
 		sessionGuiLogger.setLevel(Level.ALL);
 		sessionExceptionLogger = Logger.getLogger("IUTException");
 		sessionExceptionLogger.setLevel(Level.ALL);
-		
-		days = new String[7];
-		days[0] = getString("monday"); days[1] =  getString("tuesday"); days[2] =  getString("wednesday");
-		days[3] = getString("thursday");   days[4] =  getString("friday"); days[5] =  getString("saturday");
-		days[6] = getString("sunday"); 
-		
-		months = new String[12];
-		months[0] = getString("january"); months[1] =  getString("february"); months[2] =  getString("march");
-		months[3] = getString("april");   months[4] =  getString("may");      months[5] =  getString("june");
-		months[6] = getString("july"); months[7] =  getString("august"); months[8] =  getString("september");
-		months[9] = getString("october"); months[10] =  getString("november"); months[11] =  getString("december");
-		
 		
 	}
 	
@@ -67,13 +53,6 @@ public class ApplicationSession {
 	
 	public String getString(String key) {
 		return resourceBundle.getString(key);
-	}
-	
-	public String[] getDays() {
-		return days;
-	}
-	public String[] getMonths() {
-		return months;
 	}
 
 	public Agenda getAgenda() {

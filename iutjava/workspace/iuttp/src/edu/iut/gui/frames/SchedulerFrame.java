@@ -2,6 +2,7 @@ package edu.iut.gui.frames;
 
 import edu.iut.app.ApplicationSession;
 import edu.iut.app.IDateProvider;
+import edu.iut.gui.actions.ManagePersonsAction;
 import edu.iut.gui.actions.NewEventAction;
 import edu.iut.gui.listeners.ApplicationErrorMessageDialog;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory;
@@ -83,6 +84,8 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 			add(new ViewChangeMenuItem(ActiveView.WEEK_VIEW));
 			add(new ViewChangeMenuItem(ActiveView.DAY_VIEW));
 		}});
+
+		editMenu.add(new JMenuItem(new ManagePersonsAction(ApplicationSession.instance().getAgenda())));
 
 		JMenu helpMenu = new JMenu(ApplicationSession.instance().getString("help"));
 		helpMenu.add(fileMenu.add(new NotImplementedMenuItem("display")));

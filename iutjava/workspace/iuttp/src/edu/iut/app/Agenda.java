@@ -8,11 +8,11 @@ import java.util.*;
 
 public class Agenda extends LinkedList<ExamEvent> {
 
-    private ArrayList<Person> persons;
+    private TreeSet persons;
     private ArrayList<ChangeListener> listeners;
 
 	public Agenda() {
-        this.persons = new ArrayList<>();
+        this.persons = new TreeSet<>();
         this.listeners = new ArrayList<>();
 
         // Génération d'étudiants Fake
@@ -98,7 +98,7 @@ public class Agenda extends LinkedList<ExamEvent> {
      * Récupère la liste des personnes enregistrés
      * @return liste de personnes
      */
-    public ArrayList<Person> getPersons() {
+    public TreeSet<Person> getPersons() {
         return persons;
     }
 

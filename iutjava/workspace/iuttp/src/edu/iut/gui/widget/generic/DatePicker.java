@@ -10,6 +10,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -41,7 +42,14 @@ public class DatePicker extends JPanel implements ChangeListener, ItemListener {
 		SpinnerNumberModel model = new SpinnerNumberModel(year, minYear, maxYear, 1);
 		yearSpinner = new JSpinner(model);
 
-		monthsCombo = new JComboBox<>(ApplicationSession.instance().getMonths());
+		String[] months = new String[12];
+		SimpleDateFormat format = new SimpleDateFormat("MMMM");
+		for(int i = 1; i <= 12; i++){
+			calendar.set(Calendar.MONTH, i-1);
+			months[i-1] = format.format(calendar.getTime());
+		}
+
+		monthsCombo = new JComboBox<>(months);
 
 		Integer[] days = new Integer[31];
 		for(int i = 1; i <= 31; i++) days[i-1] = i;
