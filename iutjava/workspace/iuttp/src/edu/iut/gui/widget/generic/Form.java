@@ -24,13 +24,13 @@ public class Form extends JPanel {
             @Override
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
-                d.width = 400;
+                d.width = 460;
                 return d;
             }
         };
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        panel.setBorder(BorderFactory.createTitledBorder(name));
+        panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder(name), new EmptyBorder(0, 8, 5, 8)));
 
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 

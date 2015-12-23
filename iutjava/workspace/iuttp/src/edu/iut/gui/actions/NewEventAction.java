@@ -3,7 +3,7 @@ package edu.iut.gui.actions;
 import edu.iut.app.Agenda;
 import edu.iut.app.ApplicationSession;
 import edu.iut.app.IDateProvider;
-import edu.iut.gui.widget.agenda.ExamEventWidget;
+import edu.iut.gui.frames.ExamEventDialog;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -22,7 +22,7 @@ public class NewEventAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new ExamEventWidget(agenda, provider.getDate()).setVisible(true);
+        new ExamEventDialog(agenda, provider.getDate()).setVisible(true);
 
     }
 }
