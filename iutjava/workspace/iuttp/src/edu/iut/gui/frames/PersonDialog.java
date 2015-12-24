@@ -2,7 +2,6 @@ package edu.iut.gui.frames;
 
 import edu.iut.app.Person;
 import edu.iut.gui.widget.generic.Field;
-import edu.iut.gui.widget.generic.Form;
 import edu.iut.gui.widget.generic.IFormFilledListener;
 import edu.iut.utils.I18N;
 
@@ -22,7 +21,7 @@ public class PersonDialog extends JDialog {
     public PersonDialog(Person.PersonFunction function, Window owner){
 
         super(owner, ModalityType.APPLICATION_MODAL);
-        Form form = new Form();
+        Field.Form form = new Field.Form();
 
         this.function = function;
         this.lastname = new Field<>(I18N.get("lastname"), new JTextField());

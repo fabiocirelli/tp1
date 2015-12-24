@@ -20,7 +20,7 @@ public class ApplicationSession {
 
 	private static ApplicationSession session = null;
 	private ApplicationSession() {
-		agenda = new Agenda();
+		createNewAgenda();
 		locale = Locale.getDefault();
 		resourceBundle = ResourceBundle.getBundle("edu.iut.resources.strings.res");
 		sessionGuiLogger = Logger.getLogger("IUTTrain");
@@ -36,6 +36,10 @@ public class ApplicationSession {
 			session = new ApplicationSession();
 		}
 		return session;
+	}
+
+	public void createNewAgenda(){
+		agenda = new Agenda();
 	}
 	
 	public Logger getGUILogger() {

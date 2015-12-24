@@ -3,7 +3,6 @@ package edu.iut.gui.frames;
 import edu.iut.app.*;
 import edu.iut.gui.widget.generic.DatePicker;
 import edu.iut.gui.widget.generic.Field;
-import edu.iut.gui.widget.generic.Form;
 import edu.iut.gui.widget.generic.TimePicker;
 import edu.iut.utils.I18N;
 import edu.iut.utils.JComboBoxAutoComplete;
@@ -44,7 +43,7 @@ public class ExamEventDialog extends JDialog implements IDateProvider {
         dateField = new Field<>(I18N.get("date"), new DatePicker(){{ setDateProvider(ExamEventDialog.this); }});
         timeField = new Field<>(I18N.get("time"), new TimePicker(ApplicationSession.DAY_START, ApplicationSession.DAY_END){{ setDateProvider(ExamEventDialog.this); }});
         studentField = new Field<>(I18N.get("type_student"), studentCombo);
-        Form form = new Form();
+        Field.Form form = new Field.Form();
 
         form.createFieldset("Date et heure");
         form.addField(0, dateField);

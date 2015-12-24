@@ -2,6 +2,8 @@ package edu.iut.app;
 
 public class Person implements Comparable {
 
+	private static int AUTO_INCREMENT = 1;
+
 	public enum PersonFunction{
 		/* EX2 : Internationalisation */
 		NONE("None"),
@@ -21,6 +23,8 @@ public class Person implements Comparable {
 	
 	public Person() {
 		personFunction = PersonFunction.NONE;
+		this.id = AUTO_INCREMENT;
+		AUTO_INCREMENT++;
 	}
 
 	public Person(PersonFunction personFunction, String firstname, String lastname){
@@ -37,8 +41,21 @@ public class Person implements Comparable {
 		this.lastname = lastname;
 		this.email = email;
 		this.phone = phone;
+		this.id = AUTO_INCREMENT;
+		AUTO_INCREMENT++;
 	}
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id){
+		this.id = id;
+		if(id >= AUTO_INCREMENT){
+			AUTO_INCREMENT = id+1;
+		}
+	}
+
 	public void setFunction(PersonFunction function) {
 		this.personFunction = function;
 	}
@@ -72,7 +89,8 @@ public class Person implements Comparable {
 		return phone;
 	}
 
-	
+
+	protected int id;
 	protected PersonFunction personFunction;
 	protected String firstname;
 	protected String lastname;
@@ -101,5 +119,4 @@ public class Person implements Comparable {
 			return 0;
 		}
 	}
-
 }

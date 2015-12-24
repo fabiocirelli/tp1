@@ -30,7 +30,7 @@ public class NewPersonAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         personDialog = new PersonDialog(function, owner);
-        personDialog.setVisible(true);
         personDialog.setFormListener(formFilledListener);
+        personDialog.setVisible(true);
     }
 }

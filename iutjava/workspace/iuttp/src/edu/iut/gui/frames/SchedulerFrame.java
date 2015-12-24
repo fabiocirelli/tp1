@@ -2,13 +2,16 @@ package edu.iut.gui.frames;
 
 import edu.iut.app.ApplicationSession;
 import edu.iut.app.IDateProvider;
+import edu.iut.gui.actions.LoadAction;
 import edu.iut.gui.actions.ManagePersonsAction;
 import edu.iut.gui.actions.NewEventAction;
+import edu.iut.gui.actions.SaveAction;
 import edu.iut.gui.listeners.ApplicationErrorMessageDialog;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
 import edu.iut.gui.widget.generic.DatePicker;
 import edu.iut.gui.widget.agenda.TimePanel;
+import edu.iut.utils.I18N;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +39,7 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 	/**
 	 * Génère l'interface graphique
 	 */
-	protected void setupUI() {
+	public void setupUI() {
 
 		Calendar calendar = Calendar.getInstance();
 		currentDate = calendar.getTime();
@@ -72,8 +75,8 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 
 		JMenu fileMenu = new JMenu(ApplicationSession.instance().getString("file"));
 		fileMenu.add(new JMenuItem(new NewEventAction(ApplicationSession.instance().getAgenda(), this, this)));
-		fileMenu.add(new NotImplementedMenuItem("load"));
-		fileMenu.add(new NotImplementedMenuItem("save"));
+		fileMenu.add(new JMenuItem(new LoadAction(ApplicationSession.instance().getAgenda(), this)));
+		fileMenu.add(new JMenuItem(new SaveAction(ApplicationSession.instance().getAgenda(), this)));
 		fileMenu.add(new NotImplementedMenuItem("quit"));
 
 		JMenu editMenu = new JMenu(ApplicationSession.instance().getString("edit"));
@@ -110,6 +113,8 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
             monthView.revalidate();
 
         });
+
+		repaint();
 	}
 
 	public SchedulerFrame(String title) {
@@ -192,7 +197,7 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			new ApplicationErrorMessageDialog().newMessage("Erreur", ApplicationSession.instance().getString("notImplementedError"));
+			new ApplicationErrorMessageDialog().newMessage("Erreur", I18N.get("notImplementedError"));
 		}
 	}
 	

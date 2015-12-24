@@ -4,47 +4,18 @@ import edu.iut.app.criteria.DateCriteria;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.io.File;
 import java.util.*;
 
 public class Agenda extends LinkedList<ExamEvent> {
 
     private TreeSet persons;
     private ArrayList<ChangeListener> listeners;
+    private File file;
 
 	public Agenda() {
         this.persons = new TreeSet<>();
         this.listeners = new ArrayList<>();
-
-        // Génération d'étudiants Fake
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Alexandre", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Arthur", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Aurélien", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Bernard", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Clément", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Camille", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Daniel", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Etienne", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Emma", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Florianne", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Fatou", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Guillaume", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Gregory", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Hector", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Igar", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Julie", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Killian", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Kévin", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Laura", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Mathilde", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Marie", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Noémie", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Ophélie", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Patricia", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Rémi", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Stéphane", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Sophie", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Thibault", "Dupont"));
-        persons.add(new Person(Person.PersonFunction.STUDENT, "Timoté", "Dupont"));
 	}
 
     /**
@@ -95,7 +66,7 @@ public class Agenda extends LinkedList<ExamEvent> {
     }
 
     /**
-     * Récupère la liste des personnes enregistrés
+     * Récupère la liste des personnes enregistrées
      * @return liste de personnes
      */
     public TreeSet<Person> getPersons() {
@@ -122,4 +93,31 @@ public class Agenda extends LinkedList<ExamEvent> {
         this.listeners.add(listener);
     }
 
+    /**
+     * Retourne le dernier fichier dans lequel cet agenda a été enregistré
+     * @return fichier
+     */
+    public File getFile() {
+        return file;
+    }
+
+    /**
+     * Définit le fichier de cet agenda
+     * @return fichier
+     */
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public void reset(){
+        clear();
+        getPersons().clear();
+        file = null;
+
+        ChangeEvent event = new ChangeEvent(this);
+
+        for(ChangeListener listener : listeners){
+            listener.stateChanged(event);
+        }
+    }
 }
