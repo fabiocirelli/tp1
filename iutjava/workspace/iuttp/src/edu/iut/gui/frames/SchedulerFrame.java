@@ -48,7 +48,7 @@ public class SchedulerFrame extends JFrame implements IDateProvider{
 		layerLayout = new CardLayout();
 		contentPane.setLayout(layerLayout);
 
-		agendaPanelFactory = new AgendaPanelFactory(ApplicationSession.instance().getAgenda());
+		agendaPanelFactory = new AgendaPanelFactory(ApplicationSession.instance().getAgenda(), this);
 
 		dayView = agendaPanelFactory.getAgendaView(ActiveView.DAY_VIEW, currentDate);
 		weekView = agendaPanelFactory.getAgendaView(ActiveView.WEEK_VIEW, currentDate);

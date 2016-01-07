@@ -16,6 +16,7 @@ public class ExamEventDialog extends JDialog implements IDateProvider {
 
     private Agenda agenda;
     private ExamEvent event;
+    private boolean newEvent;
 
     private Field<DatePicker> dateField;
     private Field<TimePicker> timeField;
@@ -26,16 +27,21 @@ public class ExamEventDialog extends JDialog implements IDateProvider {
     private ArrayList<Person> students;
 
     public ExamEventDialog(Agenda agenda, Window owner, Date selectedDate){
-        this(agenda, owner, new ExamEvent(selectedDate));
+        this(agenda, owner, new ExamEvent(selectedDate), true);
     }
 
-    public ExamEventDialog(Agenda agenda, Window owner, ExamEvent event){
+    public ExamEventDialog(Agenda agenda, Window owner, ExamEvent examEvent){
+        this(agenda, owner, examEvent, false);
+    }
+
+    public ExamEventDialog(Agenda agenda, Window owner, ExamEvent event, boolean newEvent){
 
         super(owner, ModalityType.APPLICATION_MODAL);
 
         this.agenda = agenda;
         this.event = event;
         this.date = event.getExamDate();
+        this.newEvent = newEvent;
 
         students = new ArrayList<>(agenda.getPersons());
         studentCombo = new JComboBoxAutoComplete(students);
@@ -52,21 +58,23 @@ public class ExamEventDialog extends JDialog implements IDateProvider {
         form.createFieldset("Personnes");
         form.addField(1, studentField);
 
-        form.addButton(I18N.get("addItem"), e -> save());
+        form.addButton(I18N.get(newEvent ? "addItem" : "editItem"), e -> save());
 
         setContentPane(form);
-        setTitle(I18N.get("newEvent"));
+        setTitle(I18N.get(newEvent ? "newEvent" : "editEvent"));
         setResizable(false);
         pack();
-
-
 
     }
 
     public void save(){
         event.setExamDate(date);
         event.setStudent(students.get(studentCombo.getSelectedIndex()));
-        agenda.addCheckedEvent(event);
+        if(newEvent) {
+            agenda.addCheckedEvent(event);
+        }else{
+            agenda.notifyChange();
+        }
 
         setVisible(false);
     }

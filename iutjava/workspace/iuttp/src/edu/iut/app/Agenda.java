@@ -40,11 +40,7 @@ public class Agenda extends LinkedList<ExamEvent> {
             }
         });
 
-        ChangeEvent event = new ChangeEvent(this);
-
-        for(ChangeListener listener : listeners){
-            listener.stateChanged(event);
-        }
+        notifyChange();
     }
 
     /**
@@ -56,13 +52,20 @@ public class Agenda extends LinkedList<ExamEvent> {
     public boolean remove(Object o) {
         boolean result = super.remove(o);
 
+        notifyChange();
+
+        return result;
+    }
+
+    /**
+     * Notifie un changement dans l'agenda et prévient tous les listeners enregistrés
+     */
+    public void notifyChange(){
         ChangeEvent event = new ChangeEvent(this);
 
         for(ChangeListener listener : listeners){
             listener.stateChanged(event);
         }
-
-        return result;
     }
 
     /**
@@ -114,10 +117,6 @@ public class Agenda extends LinkedList<ExamEvent> {
         getPersons().clear();
         file = null;
 
-        ChangeEvent event = new ChangeEvent(this);
-
-        for(ChangeListener listener : listeners){
-            listener.stateChanged(event);
-        }
+        notifyChange();
     }
 }

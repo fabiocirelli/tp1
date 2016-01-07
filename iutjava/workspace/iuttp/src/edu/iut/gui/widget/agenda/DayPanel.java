@@ -3,6 +3,7 @@ package edu.iut.gui.widget.agenda;
 import edu.iut.app.Agenda;
 import edu.iut.app.ApplicationSession;
 import edu.iut.app.ExamEvent;
+import edu.iut.gui.actions.EditEventAction;
 import edu.iut.gui.widget.agenda.AgendaPanelFactory.ActiveView;
 import edu.iut.gui.widget.generic.DeleteButton;
 
@@ -23,8 +24,8 @@ public class DayPanel extends TimePanel {
     private HashMap<Integer, List<ExamEvent>> eventsHours;
 
 
-    public DayPanel(ActiveView activeView, Agenda agenda, Date date){
-        this(activeView, agenda, date, null);
+    public DayPanel(ActiveView activeView, Agenda agenda, Window owner, Date date){
+        this(activeView, agenda, owner, date, null);
     }
 
     /**
@@ -34,8 +35,8 @@ public class DayPanel extends TimePanel {
      * @param date la date de la vue
      * @param color couleur dans laquelle le nom du jour sera coloré (facultatif)
      */
-    public DayPanel(ActiveView activeView, Agenda agenda, Date date, Color color) {
-        super(activeView, agenda, date);
+    public DayPanel(ActiveView activeView, Agenda agenda, Window owner, Date date, Color color) {
+        super(activeView, agenda, owner, date);
         refresh();
 
         if(color != null && label != null){
@@ -166,7 +167,7 @@ public class DayPanel extends TimePanel {
 
             if(events != null) {
                 for (ExamEvent event : events) {
-                    JPanel eventPanel = new EventPanel(event, false);
+                    JButton eventPanel = new EventPanel(event, false);
 
                     add(eventPanel, gbc);
                     gbc.gridy++;
@@ -178,11 +179,13 @@ public class DayPanel extends TimePanel {
     /**
      * Vue représentant un évènement
      */
-    public class EventPanel extends JPanel{
+    public class EventPanel extends JButton{
         public EventPanel(ExamEvent event, boolean showHour) {
 
             setLayout(new BorderLayout());
             JLabel eventName = new JLabel(event.getStudent().getFullName());
+            addActionListener(new EditEventAction(agenda, owner, event));
+
             DeleteButton<ExamEvent> delete = new DeleteButton<>(event, agenda);
             Dimension d = new Dimension(25,25);
             delete.setOpaque(false);

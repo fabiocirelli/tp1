@@ -1,15 +1,15 @@
 package edu.iut.gui.widget.agenda;
 import edu.iut.app.Agenda;
-import edu.iut.app.ExamEvent;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Date;
-import java.util.List;
 
 public abstract class TimePanel extends JPanel {
 	
 	protected AgendaPanelFactory.ActiveView activeView;
     protected Agenda agenda;
+    protected Window owner;
     protected Date date;
 
     /**
@@ -18,10 +18,11 @@ public abstract class TimePanel extends JPanel {
      * @param agenda
      * @param date
      */
-    public TimePanel(AgendaPanelFactory.ActiveView activeView, Agenda agenda, Date date) {
+    public TimePanel(AgendaPanelFactory.ActiveView activeView, Agenda agenda, Window owner, Date date) {
         this.activeView = activeView;
         this.date = date;
         this.agenda = agenda;
+        this.owner = owner;
 	}
 
     public TimePanel(){

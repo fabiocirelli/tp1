@@ -18,8 +18,8 @@ public class MonthPanel extends TimePanel {
 	 * @param agenda
 	 * @param date
      */
-	public MonthPanel(Agenda agenda, Date date) {
-		super(ActiveView.MONTH_VIEW, agenda, date);
+	public MonthPanel(Agenda agenda, Window window, Date date) {
+		super(ActiveView.MONTH_VIEW, agenda, window, date);
 
 		GridLayout daysOfMonthLayout = new GridLayout(6,7);
 		this.setLayout(daysOfMonthLayout);
@@ -52,7 +52,7 @@ public class MonthPanel extends TimePanel {
 		}
 
 		do{
-			this.add(new DayPanel(ActiveView.MONTH_VIEW, agenda, d, DateUtils.isSameDate(d, date) ? Color.RED : null));
+			this.add(new DayPanel(ActiveView.MONTH_VIEW, agenda, owner, d, DateUtils.isSameDate(d, date) ? Color.RED : null));
 
 			calendar.add(Calendar.DATE, 1);
 			d = calendar.getTime();

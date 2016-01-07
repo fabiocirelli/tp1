@@ -2,11 +2,13 @@ package edu.iut.gui.widget.agenda;
 
 import edu.iut.app.Agenda;
 
+import java.awt.*;
 import java.util.Date;
 
 public class AgendaPanelFactory {
 
 	private Agenda agenda;
+	private Window owner;
 
 	public enum ActiveView{
 		MONTH_VIEW("Month View"),
@@ -24,8 +26,10 @@ public class AgendaPanelFactory {
 		}		
 	}
 	
-	public AgendaPanelFactory(Agenda agenda) {
+	public AgendaPanelFactory(Agenda agenda, Window owner) {
+
 		this.agenda = agenda;
+		this.owner = owner;
 	}
 
 	/**
@@ -38,15 +42,15 @@ public class AgendaPanelFactory {
 		TimePanel agendaView = null;
 		switch (activeView) {
 			case MONTH_VIEW:
-				MonthPanel monthPanel = new MonthPanel(agenda, date);
+				MonthPanel monthPanel = new MonthPanel(agenda, owner, date);
 				agendaView = monthPanel;
 				break;
 			case WEEK_VIEW:
-				WeekPanel weekPanel = new WeekPanel(agenda, date);
+				WeekPanel weekPanel = new WeekPanel(agenda, owner, date);
 				agendaView = weekPanel;
 				break;
 			case DAY_VIEW:
-				DayPanel dayPanel = new DayPanel(activeView, agenda, date);
+				DayPanel dayPanel = new DayPanel(activeView, agenda, owner, date);
 				agendaView = dayPanel;
 				break;
 			default:
