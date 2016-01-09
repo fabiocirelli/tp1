@@ -55,6 +55,12 @@ public class XMLPersistence {
 				eventXml.setAttribute("date", String.valueOf(event.getExamDate().getTime()));
 				eventXml.setAttribute("student", String.valueOf(event.getStudent().getId()));
 
+				for(Person person : event.getJury()){
+					Element juryXml = document.createElement("jury");
+					juryXml.setAttribute("id", String.valueOf(person.getId()));
+					eventXml.appendChild(juryXml);
+				}
+
 				root.appendChild(eventXml);
 			}
 
@@ -136,6 +142,19 @@ public class XMLPersistence {
 					}else if(a_name.equals("student")){
 						event.setStudent(personsMap.get(Integer.valueOf(attr.getValue())));
 					}
+
+					NodeList juryNodelist = eventNode.getChildNodes();
+					ArrayList<Person> jury = new ArrayList<>();
+					for(int j = 0; j < juryNodelist.getLength(); j++){
+						Node juryNode = juryNodelist.item(j);
+						if(juryNode.getNodeName().equals("jury")){
+
+							int juryId = Integer.valueOf(juryNode.getAttributes().getNamedItem("id").getNodeValue());
+							jury.add(personsMap.get(juryId));
+						}
+					}
+
+					event.setJury(jury);
 
 				}
 

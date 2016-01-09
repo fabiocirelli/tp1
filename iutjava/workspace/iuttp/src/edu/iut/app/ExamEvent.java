@@ -19,7 +19,7 @@ public class ExamEvent {
 	/** EX2: FAITE LES ACCESSEURS DES ATTRIBUTS, AJOUTER DES ATTRIBUT ? **/
 	protected Date examDate;
 	protected Person student;
-	protected ArrayList<Person> jury;
+	protected ArrayList<Person> jury = new ArrayList<>();
 	protected Classroom classroom;
 	protected ArrayList<Document> documents;
 
