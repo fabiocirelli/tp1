@@ -21,12 +21,13 @@ public class ApplicationSession {
 	private static ApplicationSession session = null;
 	private ApplicationSession() {
 		createNewAgenda();
-		locale = Locale.getDefault();
-		resourceBundle = ResourceBundle.getBundle("edu.iut.resources.strings.res");
+
 		sessionGuiLogger = Logger.getLogger("IUTTrain");
 		sessionGuiLogger.setLevel(Level.ALL);
 		sessionExceptionLogger = Logger.getLogger("IUTException");
 		sessionExceptionLogger.setLevel(Level.ALL);
+
+		setLocale(Locale.getDefault());
 		
 	}
 	

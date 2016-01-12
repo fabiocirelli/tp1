@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class ExamEventDialog extends JDialog implements IDateProvider {
 
@@ -50,7 +51,7 @@ public class ExamEventDialog extends JDialog implements IDateProvider {
             new JurySelectDialog(agenda, this, event.getJury()).setVisible(true);
         });
 
-        students = new ArrayList<>(agenda.getPersons());
+        students = new ArrayList<>(agenda.getPersons().stream().filter(p -> p.getFunction() == Person.PersonFunction.STUDENT).collect(Collectors.toList()));
 
         studentCombo = new JComboBoxAutoComplete(students);
 
@@ -67,6 +68,8 @@ public class ExamEventDialog extends JDialog implements IDateProvider {
         form.createFieldset("Personnes");
         form.addField(1, studentField);
         form.addField(1, juryField);
+
+        studentCombo.setSelectedItem(event.getStudent());
 
         form.addButton(I18N.get(newEvent ? "addItem" : "editItem"), e -> save());
 

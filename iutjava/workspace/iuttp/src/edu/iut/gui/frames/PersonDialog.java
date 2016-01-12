@@ -51,6 +51,7 @@ public class PersonDialog extends JDialog {
         setContentPane(form);
         setResizable(false);
         pack();
+        setLocationRelativeTo(null);
     }
 
     public void setFormListener(IFormFilledListener<Person> listener){

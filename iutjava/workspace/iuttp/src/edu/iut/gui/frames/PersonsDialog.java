@@ -24,6 +24,7 @@ public class PersonsDialog extends JDialog {
         setTitle(I18N.get("managePeople"));
         setContentPane(tabbedPane);
         pack();
+        setLocationRelativeTo(null);
 
     }
 }
